@@ -212,12 +212,6 @@ class ApplicationCanvas
         this.g.drawImage(image.image, srcPosX, srcPosY, srcSizeX, srcSizeY, posX, posY, sizeX, sizeY);
     }
 
-    //   /      /      /      1      2      3      4      5      6      7
-    // | n    | n    | n    | y[i] | y[s] | y[i] | y[i] | y[i] | x    | x    | // 1
-    // | n    | n    | n    | y[i] | y[s] | y[i] | y[i] | y[i] | y[i] | x    | // 2
-    // | n    | n    | n    | y[i] | y[i] | y[s] | y[i] | y[i] | y[i] | x    | // 3
-    // | n    | n    | n    | y[i] | y[i] | y[s] | y[i] | y[i] | y[i] | y[i] | // 4
-
     drawText(content, posX, posY, optparam1, optparam2, optparam3, optparam4, optparam5, optparam6, optparam7)
     {
         if(typeof optparam6 === "undefined") // 1
