@@ -22,8 +22,8 @@ This is a list of all features, classes and methods.
 ## ApplicationCanvas
 Constructor (Builder):  
 ApplicationCanvas()  
-.setCanvasElement(canvas) >> sets the canvas element
-.setOnFrameFunction(onFrameFunction) >> sets the function that gets called once per frame
+.setCanvasElement(canvas) >> sets the canvas element  
+.setOnFrameFunction(onFrameFunction) >> sets the function that gets called once per frame  
 .build() >> configures the class and starts the gameloop (applies changes if used on an existing object)  
 
 Methods:
