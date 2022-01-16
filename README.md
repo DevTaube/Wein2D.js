@@ -28,30 +28,30 @@ ApplicationCanvas()
 
 Methods:
 - Drawing stuff on screen
-   - void drawRect(int posX, int posY, int sizeX, int sizeY, int colorR, int colorG, int colorB) >> draw rectangle
-   - void drawRect(int posX, int posY, int sizeX, int sizeY, int colorA, int colorR, int colorG, int colorB) >> draw rectangle (with alpha)
-   - void drawSprite(Sprite sprite, int posX, int posY) >> draw sprite
-   - void drawSprite(Sprite sprite, int posX, int posY, int colorA) >> draw sprite (with alpha)
-   - void drawSprite(Sprite sprite, int posX, int posY, int sizeX, int sizeY) >> draw sprite (specified size)
-   - void drawSprite(Sprite sprite, int posX, int posY, int sizeX, int sizeY, int colorA) >> draw sprite (specified size, with alpha)
-   - void drawSprite(Sprite sprite, int posX, int posY, int sizeX, int sizeY, int srcPosX, int srcPosY, int srcSizeX, int srcSizeY) >> draw sprite (specified size and source size)
-   - void drawSprite(Sprite sprite, int posX, int posY, int sizeX, int sizeY, int srcPosX, int srcPosY, int srcSizeX, int srcSizeY, int colorA) >> draw sprite (specified size and source size, with alpha)
-   - void drawText(String content, int posX, int posY, int fontSize, String fontFamily, int colorR, int colorG, int colorB) >> draw text
-   - void drawText(String content, int posX, int posY, int fontSize, String fontFamily, int colorA, int colorR, int colorG, int colorB) >> draw text (with alpha)
-   - void drawText(String content, int posX, int posY, int positioning, int fontSize, String fontFamily, int colorR, int colorG, int colorB) >> draw text (with positioning)
+   - void drawRect(posX, posY, sizeX, sizeY, colorR, colorG, colorB) >> draw rectangle
+   - void drawRect(posX, posY, sizeX, sizeY, colorA, colorR, colorG, colorB) >> draw rectangle (with alpha)
+   - void drawSprite(sprite, posX, posY) >> draw sprite
+   - void drawSprite(sprite, posX, posY, colorA) >> draw sprite (with alpha)
+   - void drawSprite(sprite, posX, posY, sizeX, sizeY) >> draw sprite (specified size)
+   - void drawSprite(sprite, posX, posY, sizeX, sizeY, colorA) >> draw sprite (specified size, with alpha)
+   - void drawSprite(sprite, posX, posY, sizeX, sizeY, srcPosX, srcPosY, srcSizeX, srcSizeY) >> draw sprite (specified size and source size)
+   - void drawSprite(sprite, posX, posY, sizeX, sizeY, srcPosX, srcPosY, srcSizeX, srcSizeY, colorA) >> draw sprite (specified size and source size, with alpha)
+   - void drawText(content, posX, posY, fontSize, fontFamily, colorR, colorG, colorB) >> draw text
+   - void drawText(content, posX, posY, fontSize, fontFamily, colorA, colorR, colorG, colorB) >> draw text (with alpha)
+   - void drawText(content, posX, posY, positioning, fontSize, fontFamily, colorR, colorG, colorB) >> draw text (with positioning)
         - positioning may be: TextPositioning.LEFT, TextPositioning.CENTER, TextPositioning.RIGHT
-   - void drawText(String content, int posX, int posY, int positioning, int fontSize, String fontFamily, int colorA, int colorR, int colorG, int colorB) >> draw text (with positioning, with alpha)
+   - void drawText(content, posX, posY, positioning, fontSize, fontFamily, colorA, colorR, colorG, colorB) >> draw text (with positioning, with alpha)
         - positioning may be: TextPositioning.LEFT, TextPositioning.CENTER, TextPositioning.RIGHT
-   - void fill(int colorR, int colorG, int colorB) >> fill window with color
-   - void fill(int colorA, int colorR, int colorG, int colorB) >> fill window with color (with alpha)
-   - void drawLine(int posX, int posY, int endX, int endY, int width, int colorR, int colorG, int colorB) >> draws a line on screen
-   - void drawLine(int posX, int posY, int endX, int endY, int width, int colorA, int colorR, int colorG, int colorB) >> draws a line on screen with alpha
+   - void fill(colorR, colorG, colorB) >> fill window with color
+   - void fill(colorA, colorR, colorG, colorB) >> fill window with color (with alpha)
+   - void drawLine(posX, posY, endX, endY, width, colorR, colorG, colorB) >> draws a line on screen
+   - void drawLine(posX, posY, endX, endY, width, colorA, colorR, colorG, colorB) >> draws a line on screen with alpha
 - Input
    - int getMouseX() >> returns the mouse's position on the x-axis
    - int getMouseY() >> returns the mouse's position on the y-axis
    - boolean getMouseL() >> returns if the mouse's left button is being pressed
    - boolean getMouseR() >> returns if the mouse's right button is being pressed
-   - void getKey(int keyID) >> returns if a certain key on the keyboard is being pressed
+   - void getKey(keyID) >> returns if a certain key on the keyboard is being pressed
        - valid key ID's:
          - Key.CTRL, Key.SHIFT, Key.SPACE, Key.BACKSPACE, Key.ENTER, Key.ALT
          - Key.UP, Key.DOWN, Key.LEFT, Key.RIGHT
@@ -66,13 +66,13 @@ Variables:
 ## Sprite
 Constructors:  
 
-Sprite(String filePath)  
+Sprite(filePath)  
 -> creates and loads the Sprite from the given path  
 
 ## Sound
 Constructors:  
 
-Sound(String filePath)  
+Sound(filePath)  
 -> creates and loads the sound from the given path  
 
 Methods:
@@ -81,19 +81,19 @@ Methods:
 
 ## Collision
 Methods:
- - static boolean lineTouchingRect(int lineX, int lineY, int lineLengthOnXAxis, int rectPosX, int rectPosY, int rectSizeX, int rectSizeY)
+ - static boolean lineTouchingRect(lineX, lineY, lineLengthOnXAxis, rectPosX, rectPosY, rectSizeX, rectSizeY)
      - returns 'false' if line doesn't touch specified rectangle
      - returns 'true' if line touches specified rectangle
- - static boolean rectTouchingRect(int rect1PosX, int rect1PosY, int rect1SizeX, int rect1SizeY, int rect2PosX, int rect2PosY, int rect2SizeX, int rect2SizeY)
+ - static boolean rectTouchingRect(rect1PosX, rect1PosY, rect1SizeX, rect1SizeY, rect2PosX, rect2PosY, rect2SizeX, rect2SizeY)
      - returns 'false' if rectangle doesn't touch specified rectangle
      - returns 'true' if rectangle touches specified rectangle
- - static boolean pointInsideRect(int pointX, int pointY, int rectPosX, int rectPosY, int rectSizeX, int rectSizeY)
+ - static boolean pointInsideRect(pointX, pointY, rectPosX, rectPosY, rectSizeX, rectSizeY)
      - returns 'false' if point isn't inside specified rectangle
      - returns 'true' if point is inside specified rectangle
- - static boolean lineInsideRect(int lineX, int lineY, int lineLengthOnXAxis, int rectPosX, int rectPosY, int rectSizeX, int rectSizeY)
+ - static boolean lineInsideRect(lineX, lineY, lineLengthOnXAxis, rectPosX, rectPosY, rectSizeX, rectSizeY)
      - returns 'false' if line isn't inside specified rectangle
      - returns 'true' if line is inside specified rectangle
- - static boolean rectInsideRect(int rect1PosX, int rect1PosY, int rect1SizeX, int rect1SizeY, int rect2PosX, int rect2PosY, int rect2SizeX, int rect2SizeY)
+ - static boolean rectInsideRect(rect1PosX, rect1PosY, rect1SizeX, rect1SizeY, rect2PosX, rect2PosY, rect2SizeX, rect2SizeY)
      - returns 'false' if rectangle isn't inside specified rectangle
      - returns 'true' if rectangle is inside specified rectangle
 
