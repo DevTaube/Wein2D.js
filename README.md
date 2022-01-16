@@ -11,7 +11,7 @@ Other Versions:
 [Wein2DAndroid](https://www.github.com/devtaube/wein2dandroid)  
 
 ## Code example
-This is a simple Example for a program (testapp.html):
+This is a simple Example for a browser game (testapp.html):
 ![testapp.html](https://github.com/devtaube/wein2d.js/blob/main/markdown_images/examplepage.png?raw=true)
 
 The code is also located in "./testapp.html".
