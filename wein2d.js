@@ -279,6 +279,9 @@ class ApplicationCanvas
             this.height = this.canvasElement.offsetHeight;
             // rendering context
             this.g = this.canvasElement.getContext("2d");
+            this.g.webkitImageSmoothingEnabled = false
+            this.g.mozImageSmoothingEnabled = false
+            this.g.imageSmoothingEnabled = false
             // variables for input
             this.mouseButtonL = false;
             this.mouseButtonR = false;
