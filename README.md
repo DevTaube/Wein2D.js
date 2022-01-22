@@ -16,36 +16,40 @@ This is a simple Example for a browser game (testapp.html):
 <!DOCTYPE html>
 <html>
     <head>
-        <style> /* Stylesheet */
+        <style>
             * { margin: 0px; padding: 0px; border: 0px; overflow: hidden; background-color: #313131; }
             canvas { width: 80vw; height: 80vh; margin-left: 10vw; margin-top: 10vh; background-color: #f1f1f1; }
         </style>
         <script src="wein2d.js"></script> <!-- include Wein2D -->
-        <script> // main script
+        <script>
 
             let appCanvas; // stores the ApplicationCanvas
-            let ballX = 0; // stores the ball's position
+            let ballX = 0;
 
             window.onload = function()
             {
-                appCanvas = new ApplicationCanvas() // create ApplicationCanvas object
-                    .setCanvasElement(document.getElementById("canvas")) // add Canvas
-                    .setOnFrameFunction(onFrame) // add onFrame function
-                    .build(); // build the ApplicationCanvas and start calling onFrame function once per frame
+                // new ApplicationCanvas() >> creates ApplicationCanvas object
+                // .setCanvasElement( [<canvas></canvas>-element] ) >> adds the canvas element
+                // .setOnFrameFunction( [function] ) >> adds a function to be called every frame
+                // .build(); >> applies changes and runs gameloop
+                appCanvas = new ApplicationCanvas()
+                    .setCanvasElement(document.getElementById("canvas"))
+                    .setOnFrameFunction(onFrame)
+                    .build();
             };
 
             function onFrame()
             {
-                ballX += 3; // move the ball
-                if (ballX > appCanvas.width) ballX = -50; // teleport it to the other side if it hits the edge
-                appCanvas.fill(255, 255, 255); // fill the screen with white
-                appCanvas.drawRect(ballX, (appCanvas.height - 50) / 2, 50, 50, 59, 187, 164); // draw the ball
+                ballX += 3;
+                if (ballX > appCanvas.width) ballX = -100;
+                appCanvas.fill(40, 40, 40); // fill the screen with gray
+                appCanvas.drawRect(ballX, (appCanvas.height - 100) / 2, 100, 100, 255, 255, 255); // draw the 'ball'
             }
 
         </script>
     </head>
     <body>
-        <canvas id="canvas"></canvas> <!-- canvas element -->
+        <canvas id="canvas"></canvas> <!-- normal canvas element -->
     </body>
 </html>
 ```
