@@ -22,12 +22,10 @@ This is a simple Example for a browser game (testapp.html):
         </style>
         <script src="wein2d.js"></script> <!-- include Wein2D -->
         <script>
-
             let appCanvas; // stores the ApplicationCanvas
             let ballX = 0;
 
-            window.onload = function()
-            {
+            window.onload = function() {
                 // new ApplicationCanvas() >> creates ApplicationCanvas object
                 // .setCanvasElement( [<canvas></canvas>-element] ) >> adds the canvas element
                 // .setOnFrameFunction( [function] ) >> adds a function to be called every frame
@@ -38,14 +36,12 @@ This is a simple Example for a browser game (testapp.html):
                     .build();
             };
 
-            function onFrame()
-            {
+            function onFrame() {
                 ballX += 3;
                 if (ballX > appCanvas.width) ballX = -100;
                 appCanvas.fill(40, 40, 40); // fill the screen with gray
                 appCanvas.drawRect(ballX, (appCanvas.height - 100) / 2, 100, 100, 255, 255, 255); // draw the 'ball'
             }
-
         </script>
     </head>
     <body>
