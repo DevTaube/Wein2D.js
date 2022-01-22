@@ -30,10 +30,7 @@ This is a simple Example for a browser game (testapp.html):
                 // .setCanvasElement( [<canvas></canvas>-element] ) >> adds the canvas element
                 // .setOnFrameFunction( [function] ) >> adds a function to be called every frame
                 // .build(); >> applies changes and runs gameloop
-                appCanvas = new ApplicationCanvas()
-                    .setCanvasElement(document.getElementById("canvas"))
-                    .setOnFrameFunction(onFrame)
-                    .build();
+                appCanvas = new ApplicationCanvas().setCanvasElement(document.getElementById("canvas")).setOnFrameFunction(onFrame).build();
             };
 
             function onFrame() {
