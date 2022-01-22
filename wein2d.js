@@ -154,6 +154,7 @@ class ApplicationCanvas
                 case 121: this.keys[Key.F10] = state; break;
                 case 122: this.keys[Key.F11] = state; break;
                 case 123: this.keys[Key.F12] = state; break;
+                case 27: this.keys[Key.ESC] = state; break;
             }
         }
     }
@@ -287,7 +288,7 @@ class ApplicationCanvas
             this.mouseButtonR = false;
             this.mouseX = 0;
             this.mouseY = 0;
-            this.keys = new Array(58).fill(false);
+            this.keys = new Array(59).fill(false);
             // event listeners
             window.addEventListener("mousedown", (e) => this.mouseDown(e));
             window.addEventListener("mouseup", (e) => this.mouseUp(e));
@@ -367,6 +368,7 @@ class Key
     static F10 = 55;
     static F11 = 56;
     static F12 = 57;
+    static ESC = 58;
 }
 
 
