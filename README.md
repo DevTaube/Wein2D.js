@@ -12,7 +12,43 @@ Other Versions:
 
 ## Code example
 This is a simple Example for a browser game (testapp.html):
-![testapp.html](https://github.com/devtaube/wein2d.js/blob/main/markdown_images/examplepage.png?raw=true)
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <style> /* Stylesheet */
+            * { margin: 0px; padding: 0px; border: 0px; overflow: hidden; background-color: #313131; }
+            canvas { width: 80vw; height: 80vh; margin-left: 10vw; margin-top: 10vh; background-color: #f1f1f1; }
+        </style>
+        <script src="wein2d.js"></script> <!-- include Wein2D -->
+        <script> // main script
+
+            let appCanvas; // stores the ApplicationCanvas
+            let ballX = 0; // stores the ball's position
+
+            window.onload = function()
+            {
+                appCanvas = new ApplicationCanvas() // create ApplicationCanvas object
+                    .setCanvasElement(document.getElementById("canvas")) // add Canvas
+                    .setOnFrameFunction(onFrame) // add onFrame function
+                    .build(); // build the ApplicationCanvas and start calling onFrame function once per frame
+            };
+
+            function onFrame()
+            {
+                ballX += 3; // move the ball
+                if (ballX > appCanvas.width) ballX = -50; // teleport it to the other side if it hits the edge
+                appCanvas.fill(255, 255, 255); // fill the screen with white
+                appCanvas.drawRect(ballX, (appCanvas.height - 50) / 2, 50, 50, 59, 187, 164); // draw the ball
+            }
+
+        </script>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas> <!-- canvas element -->
+    </body>
+</html>
+```
 
 The code is also located in "./testapp.html".
 
