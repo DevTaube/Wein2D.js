@@ -11,7 +11,7 @@ Other Versions:
 [Wein2DAndroid](https://www.github.com/devtaube/wein2dandroid)  
 
 ## Code example
-This is a simple Example for a browser game (testapp.html):
+This is a simple Example for a browser game (testgame.html):
 ```html
 <!DOCTYPE html>
 <html>
