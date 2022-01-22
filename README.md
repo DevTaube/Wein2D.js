@@ -86,7 +86,7 @@ Methods:
    - boolean getMouseR() >> returns if the mouse's right button is being pressed
    - void getKey(keyID) >> returns if a certain key on the keyboard is being pressed
        - valid key ID's:
-         - Key.CTRL, Key.SHIFT, Key.SPACE, Key.BACKSPACE, Key.ENTER, Key.ALT
+         - Key.CTRL, Key.SHIFT, Key.SPACE, Key.BACKSPACE, Key.ENTER, Key.ALT, Key.ESC
          - Key.UP, Key.DOWN, Key.LEFT, Key.RIGHT
          - Key.A, Key.B, Key.C, [...] Key.X, Key.Y, Key.Z
          - Key.N0, Key.N1, Key.N2, [...] Key.N7, Key.N8, Key.N9
