@@ -11,6 +11,16 @@ class ApplicationCanvas
         this.canvasElement.height = this.canvasElement.offsetHeight;
         this.width = this.canvasElement.offsetWidth;
         this.height = this.canvasElement.offsetHeight;
+        // deltaTime
+        if(this.lastWidth != this.width || this.lastHeight != this.height)
+        {
+            this.lastWidth = this.width;
+            this.lastHeight = this.height;
+            this.lastFrameTime = window.performance.now();
+        }
+        let currentTime = window.performance.now();
+        this.deltaTime = (currentTime - this.lastFrameTime) / 1_000_000;
+        this.lastFrameTime = currentTime;
         // call onframe function
         this.onFrameFunction();
         // recall this function
@@ -278,6 +288,8 @@ class ApplicationCanvas
             // canvas size
             this.width = this.canvasElement.offsetWidth;
             this.height = this.canvasElement.offsetHeight;
+            this.lastWidth = this.width;
+            this.lastHeight = this.height;
             // rendering context
             this.g = this.canvasElement.getContext("2d");
             this.g.webkitImageSmoothingEnabled = false
@@ -299,6 +311,7 @@ class ApplicationCanvas
             window.addEventListener("keydown", (e) => this.keyChange(e, true));
             window.addEventListener("keyup", (e) => this.keyChange(e, false));
             // start gameloop
+            this.lastFrameTime = window.performance.now();
             requestAnimationFrame((timestamp) => this.onFrame(timestamp));
         }
         return this;
