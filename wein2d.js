@@ -19,7 +19,7 @@ class ApplicationCanvas
             this.lastFrameTime = window.performance.now();
         }
         let currentTime = window.performance.now();
-        this.deltaTime = (currentTime - this.lastFrameTime) / 1_000_000;
+        this.deltaTime = (currentTime - this.lastFrameTime) / 1_000;
         this.lastFrameTime = currentTime;
         // call onframe function
         this.onFrameFunction();
