@@ -1,6 +1,8 @@
 # About
 Wein2D.js is a library for handling graphics, input and sound for Browser Games in Javascript. 
 
+*There is no support for Internet Explorer. Sorry not sorry.*
+
 ## Code example
 This is a simple example for a browser game:
 ```html
