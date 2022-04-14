@@ -374,9 +374,9 @@ class RenderCalls
     fill(color1, color2, color3, color4)
     {
         if(typeof color4 === "undefined")
-            this.drawRect(0, 0, this.width, this.height, 255, color1, color2, color3)
+            this.drawRect(-1, -1, this.width + 2, this.height + 2, 255, color1, color2, color3)
         else
-            this.drawRect(0, 0, this.width, this.height, color1, color2, color3, color4)
+            this.drawRect(-1, -1, this.width + 2, this.height + 2, color1, color2, color3, color4)
     }
 
     drawLine(posX, posY, endX, endY, width, color1, color2, color3, color4)
