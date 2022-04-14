@@ -325,7 +325,14 @@ class RenderCalls
 
     drawSprite(sprite, posX, posY, optparam1, optparam2, optparam3, optparam4, optparam5, optparam6, optparam7)
     {
+        if(typeof sprite === "undefined")
+            return
+
         let image = sprite.getImage()
+
+        if(!sprite.loaded)
+            return
+
         if(typeof optparam1 === "undefined")
             this.drawSpriteInternally(image, posX, posY, image.width, image.height, 0, 0, image.width, image.height, 255) // default
         else if(typeof optparam2 === "undefined")
@@ -492,10 +499,13 @@ class Sprite
 {
 
     image = undefined
+    loaded = false
 
     constructor(filePath)
     {
-        this.image = new Image
+        this.image = new Image()
+        this.image.parentSprite = this
+        this.image.onload = function() { this.parentSprite.onload() }
         this.image.src = filePath
     }
 
@@ -512,6 +522,11 @@ class Sprite
     getImage()
     {
         return this.image
+    }
+
+    onload()
+    {
+        this.loaded = true
     }
 
 }
