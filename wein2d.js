@@ -45,12 +45,12 @@ class InputManager
     {
         this.canvasElement = canvasElement
         canvasElement.oncontextmenu = function(e) { e.preventDefault(); return false; }
-        canvasElement.addEventListener("mousedown", (e) => this.mouseDown(e))
-        canvasElement.addEventListener("mouseup", (e) => this.mouseUp(e))
-        canvasElement.addEventListener("mousemove", (e) => this.mouseMove(e))
-        canvasElement.addEventListener("touchstart", (e) => this.touchStart(e))
-        canvasElement.addEventListener("touchend", (e) => this.touchEnd(e))
-        canvasElement.addEventListener("touchmove", (e) => this.touchMove(e))
+        window.addEventListener("mousedown", (e) => this.mouseDown(e))
+        window.addEventListener("mouseup", (e) => this.mouseUp(e))
+        window.addEventListener("mousemove", (e) => this.mouseMove(e))
+        window.addEventListener("touchstart", (e) => this.touchStart(e))
+        window.addEventListener("touchend", (e) => this.touchEnd(e))
+        window.addEventListener("touchmove", (e) => this.touchMove(e))
         window.addEventListener("keydown", (e) => this.keyDown(e))
         window.addEventListener("keyup", (e) => this.keyUp(e))
     }
