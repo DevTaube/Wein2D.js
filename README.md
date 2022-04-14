@@ -10,23 +10,54 @@ This is a simple example for a browser game:
 <html>
     <head>
         <style>
-            * { margin: 0px; padding: 0px; border: 0px; overflow: hidden; background-color: #313131; }
-            canvas { width: 80vw; height: 80vh; margin-left: 10vw; margin-top: 10vh; background-color: #f1f1f1; }
+            * { margin: 0px; overflow: hidden; }
+            canvas { width: 100vw; height: 100vh; }
         </style>
         <script src="wein2d.js"></script> <!-- include Wein2D -->
         <script>
-            let wein2dApplication // stores the app
-            let ballX = 0;
+            // cube values (feel free to play with these!)
+            const CUBE_SIZE = 25.0; // the width and height of the cube (in pixels)
+            const CUBE_JUMP_VELOCITY = 400.0; // the cube's jump velocity (in pixels per second)
+            const CUBE_GRAVITATION = 800.0; // gravitation (how much velocity gets removed per second)
+            const CUBE_BOUNCEBACK_MULTIPLIER = 0.4; // how much velocity the cube keeps after hitting the ground
+
+            let wein2dApplication; // stores the app
+            let cubeHeight = 0;
+            let cubeVelocity = 0;
 
             window.onload = function() {
                 wein2dApplication = new Wein2DApplication(document.getElementById("canvas"), onFrame);
             };
 
             function onFrame() {
-                ballX += 3;
-                if (ballX > wein2dApplication.width) ballX = -100;
-                wein2dApplication.fill(40, 40, 40); // fill the screen with gray
-                wein2dApplication.drawOval(ballX, (wein2dApplication.height - 100) / 2, 100, 100, 255, 255, 255); // draw the ball
+                // update calls //////////////////////////////////////////////////
+
+                // if screen is tapped, set the cubes velocity (let the cube jump up)
+                if(wein2dApplication.getMouseL()) cubeVelocity = CUBE_JUMP_VELOCITY;
+
+                // move the cube up and down according to it's velocity
+                cubeHeight += cubeVelocity * wein2dApplication.deltaTime;
+                // if the cube is not on the ground remove some of the cube's velocity (gravitation)
+                if(cubeHeight > 0.0) cubeVelocity -= CUBE_GRAVITATION * wein2dApplication.deltaTime;
+
+                // if the cube is below or on the ground, set him onto the ground, invert the cube's velocity (movement) and remove some of it's velocity
+                if(cubeHeight <= 0.0) {
+                    cubeVelocity = -cubeVelocity * CUBE_BOUNCEBACK_MULTIPLIER;
+                    cubeHeight = 0.0;
+                }
+
+                // render calls //////////////////////////////////////////////////
+
+                // fill the screen with blue
+                wein2dApplication.fill(255, 11, 138, 143);
+
+                // draw the cube
+                wein2dApplication.drawRect(
+                    (wein2dApplication.width - CUBE_SIZE) / 2.0, // draw at the center of the screen (x axis)
+                    wein2dApplication.height - CUBE_SIZE - cubeHeight, // draw at the cube's height (y axis)
+                    CUBE_SIZE, CUBE_SIZE, // draw the cube with it's width and height
+                    255, 255, 255, 255 // draw the cube white
+                );
             }
         </script>
     </head>
