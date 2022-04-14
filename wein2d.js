@@ -535,6 +535,8 @@ class Sound
 
     play()
     {
+        if(this.isPlaying())
+            this.stop()
         this.sound.play()
     }
 
@@ -601,6 +603,16 @@ class VirtualCanvas extends RenderCalls
 
         super.setRenderContext(this.graphics)
         super.setSize(this.width, this.height)
+    }
+
+    getWidth()
+    {
+        return this.width
+    }
+
+    getHeight()
+    {
+        return this.height
     }
 
     getImage()
