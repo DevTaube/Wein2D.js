@@ -13,9 +13,8 @@ This is a simple example for a browser game:
             * { margin: 0px; overflow: hidden; }
             canvas { width: 100vw; height: 100vh; }
         </style>
-        <script src="wein2d.js"></script> <!-- include Wein2D -->
+        <script src="wein2d.js"></script> <!-- include Wein2D (file path of wein2d.js or wein2d_minified.js, the code is the same) -->
         <script>
-            // cube values (feel free to play with these!)
             const CUBE_SIZE = 25.0; // the width and height of the cube (in pixels)
             const CUBE_JUMP_VELOCITY = 400.0; // the cube's jump velocity (in pixels per second)
             const CUBE_GRAVITATION = 800.0; // gravitation (how much velocity gets removed per second)
@@ -49,15 +48,15 @@ This is a simple example for a browser game:
                 // render calls //////////////////////////////////////////////////
 
                 // fill the screen with blue
-                wein2dApplication.fill(255, 11, 138, 143);
+                wein2dApplication.fill(11, 138, 143, 255);
 
                 // draw the cube
-                wein2dApplication.drawRect(
-                    (wein2dApplication.width - CUBE_SIZE) / 2.0, // draw at the center of the screen (x axis)
-                    wein2dApplication.height - CUBE_SIZE - cubeHeight, // draw at the cube's height (y axis)
-                    CUBE_SIZE, CUBE_SIZE, // draw the cube with it's width and height
-                    255, 255, 255, 255 // draw the cube white
-                );
+                wein2dApplication.drawRectangle()
+                    .setPosition((wein2dApplication.width - CUBE_SIZE) / 2.0, wein2dApplication.height - CUBE_SIZE - cubeHeight) // draw at the center of the screen and cube's height
+                    .setSize(CUBE_SIZE, CUBE_SIZE) // draw the cube with it's width and height
+                    .setColor(255, 255, 255) // draw in white
+                    .rotateDegrees(cubeHeight) // rotate it by its height in degrees (why? because it looks cool)
+                    .draw(); // draw it
             }
         </script>
     </head>
