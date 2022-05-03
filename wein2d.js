@@ -25,6 +25,15 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+/*
+ *  CLASSES FOR USER INPUT
+ *
+ *  These classes are for receiving input from the user.
+ *  InputManager is used by Wein2DApplication and should not be used from
+ *  outside of the library. Thats why it also isn't documented.
+ *  Key is for describing a specific Key.
+ */
+
 class InputManager
 {
 
@@ -284,139 +293,6 @@ class InputManager
 
 
 
-class RenderCalls
-{
-
-    renderContext = undefined
-    width = 0
-    height = 0
-
-    setRenderContext(renderContext)
-    {
-        this.renderContext = renderContext
-    }
-
-    setSize(width, height)
-    {
-        this.width = width
-        this.height = height
-    }
-
-
-    drawRect(posX, posY, sizeX, sizeY, color1, color2, color3, color4)
-    {
-        if(typeof color4 === "undefined")
-            this.renderContext.fillStyle = `rgb(${color1}, ${color2}, ${color3})`
-        else
-            this.renderContext.fillStyle = `rgba(${color2}, ${color3}, ${color4}, ${(color1 / 255)})`
-        this.renderContext.fillRect(posX, posY, sizeX, sizeY)
-    }
-
-    drawOval(posX, posY, sizeX, sizeY, color1, color2, color3, color4)
-    {
-        if(typeof color4 === "undefined")
-            this.renderContext.fillStyle = `rgb(${color1}, ${color2}, ${color3})`
-        else
-            this.renderContext.fillStyle = `rgba(${color2}, ${color3}, ${color4}, ${(color1 / 255)})`
-        this.renderContext.beginPath();
-        this.renderContext.ellipse(posX + sizeX / 2, posY + sizeY / 2, sizeX / 2, sizeY / 2, 0, 2 * Math.PI, false);
-        this.renderContext.fill();
-    }
-
-    drawSprite(sprite, posX, posY, optparam1, optparam2, optparam3, optparam4, optparam5, optparam6, optparam7)
-    {
-        if(typeof sprite === "undefined")
-            return
-
-        let image = sprite.getImage()
-
-        if(!sprite.loaded)
-            return
-
-        if(typeof optparam1 === "undefined")
-            this.drawSpriteInternally(image, posX, posY, image.width, image.height, 0, 0, image.width, image.height, 255) // default
-        else if(typeof optparam2 === "undefined")
-            this.drawSpriteInternally(image, posX, posY, image.width, image.height, 0, 0, image.width, image.height, optparam1) // default + a
-        else if(typeof optparam3 === "undefined")
-            this.drawSpriteInternally(image, posX, posY, optparam1, optparam2, 0, 0, image.width, image.height, 255) // default + custom size
-        else if(typeof optparam4 === "undefined")
-            this.drawSpriteInternally(image, posX, posY, optparam1, optparam2, 0, 0, image.width, image.height, optparam3) // default + custom size + a
-        else if(typeof optparam7 === "undefined")
-            this.drawSpriteInternally(image, posX, posY, optparam1, optparam2, optparam3, optparam4, optparam5, optparam6, 255) // default + custom size + custom src
-        else
-            this.drawSpriteInternally(image, posX, posY, optparam1, optparam2, optparam3, optparam4, optparam5, optparam6, optparam7) // default + custom size + custom src + a
-    }
-    drawSpriteInternally(image, posX, posY, sizeX, sizeY, srcPosX, srcPosY, srcSizeX, srcSizeY, colorA)
-    {
-        this.renderContext.globalAlpha = colorA / 255
-        this.renderContext.drawImage(image, srcPosX, srcPosY, srcSizeX, srcSizeY, posX, posY, sizeX, sizeY)
-    }
-
-    drawText(content, posX, posY, optparam1, optparam2, optparam3, optparam4, optparam5, optparam6, optparam7)
-    {
-        if(typeof optparam6 === "undefined")
-            this.drawTextInternally(content, posX, posY, TextPositioning.RIGHT, optparam1, optparam2, 255, optparam3, optparam4, optparam5)
-        else if(typeof optparam7 === "undefined" && typeof optparam2 === "string")
-            this.drawTextInternally(content, posX, posY, TextPositioning.RIGHT, optparam1, optparam2, optparam3, optparam4, optparam5, optparam6)
-        else if(typeof optparam7 === "undefined" && typeof optparam3 === "string")
-            this.drawTextInternally(content, posX, posY, optparam1, optparam2, optparam3, 255, optparam4, optparam5, optparam6)
-        else
-            this.drawTextInternally(content, posX, posY, optparam1, optparam2, optparam3, optparam4, optparam5, optparam6, optparam7)
-    }
-    drawTextInternally(content, posX, posY, positioning, fontSize, fontFamily, colorA, colorR, colorG, colorB)
-    {
-        this.renderContext.font = `${fontSize}px ${fontFamily}`
-        this.renderContext.fillStyle = `rgba(${colorR}, ${colorG}, ${colorB}, ${colorA / 255})`
-        this.renderContext.textAlign = positioning
-        this.renderContext.fillText(content, posX, posY + fontSize)
-    }
-
-    fill(color1, color2, color3, color4)
-    {
-        if(typeof color4 === "undefined")
-            this.drawRect(-1, -1, this.width + 2, this.height + 2, 255, color1, color2, color3)
-        else
-            this.drawRect(-1, -1, this.width + 2, this.height + 2, color1, color2, color3, color4)
-    }
-
-    drawLine(posX, posY, endX, endY, width, color1, color2, color3, color4)
-    {
-        if(typeof color4 === "undefined")
-            this.renderContext.strokeStyle = `rgb(${color1}, ${color2}, ${color3})`
-        else
-            this.renderContext.strokeStyle = `rgba(${color2}, ${color3}, ${color4}, ${(color1 / 255)})`
-        this.renderContext.lineWidth = width
-        this.renderContext.beginPath()
-        this.renderContext.moveTo(posX, posY)
-        this.renderContext.lineTo(endX, endY)
-        this.renderContext.stroke()
-    }
-
-    drawVirtualCanvas(virtualCanvas, posX, posY, optparam1, optparam2, optparam3, optparam4, optparam5, optparam6, optparam7)
-    {
-        if(typeof optparam1 === "undefined")
-            this.drawVirtualCanvasInternally(virtualCanvas.canvasElement, posX, posY, virtualCanvas.width, virtualCanvas.height, 0, 0, virtualCanvas.width, virtualCanvas.height, 255) // default
-        else if(typeof optparam2 === "undefined")
-            this.drawVirtualCanvasInternally(virtualCanvas.canvasElement, posX, posY, virtualCanvas.width, virtualCanvas.height, 0, 0, virtualCanvas.width, virtualCanvas.height, optparam1) // default + a
-        else if(typeof optparam3 === "undefined")
-            this.drawVirtualCanvasInternally(virtualCanvas.canvasElement, posX, posY, optparam1, optparam2, 0, 0, virtualCanvas.width, virtualCanvas.height, 255) // default + custom size
-        else if(typeof optparam4 === "undefined")
-            this.drawVirtualCanvasInternally(virtualCanvas.canvasElement, posX, posY, optparam1, optparam2, 0, 0, virtualCanvas.width, virtualCanvas.height, optparam3) // default + custom size + a
-        else if(typeof optparam7 === "undefined")
-            this.drawVirtualCanvasInternally(virtualCanvas.canvasElement, posX, posY, optparam1, optparam2, optparam3, optparam4, optparam5, optparam6, 255) // default + custom size + custom src
-        else
-            this.drawSpriteInternally(virtualCanvas.canvasElement, posX, posY, optparam1, optparam2, optparam3, optparam4, optparam5, optparam6, optparam7) // default + custom size + custom src + a
-    }
-    drawVirtualCanvasInternally(canvasElement, posX, posY, sizeX, sizeY, srcPosX, srcPosY, srcSizeX, srcSizeY, colorA)
-    {
-        this.renderContext.globalAlpha = colorA / 255
-        this.renderContext.drawImage(canvasElement, srcPosX, srcPosY, srcSizeX, srcSizeY, posX, posY, sizeX, sizeY)
-    }
-
-}
-
-
-
 class Key
 {
 
@@ -482,7 +358,15 @@ class Key
 
 }
 
-
+/*
+ *  CLASSES FOR RENDERING
+ *
+ *  These classes are used for rendering to the canvas.
+ *  RenderCalls provides an interface for rendering methods.
+ *  TextPositioning can be used to specify the positioning of rendered text.
+ *  Sprite can be used to load an Image into memory.
+ *  VirtualCanvas provides a virtual surface to draw onto.
+ */
 
 class TextPositioning
 {
@@ -490,6 +374,781 @@ class TextPositioning
     static LEFT = "right"
     static CENTER = "center"
     static RIGHT = "left"
+
+}
+
+
+
+class RectangleRenderCall
+{
+
+    renderCalls = undefined
+
+    posX = NaN
+    posY = NaN
+    width = NaN
+    height = NaN
+
+    colorRed = 0
+    colorGreen = 0
+    colorBlue = 0
+    colorAlpha = 255
+
+    angle = 0
+    rotationPointX = NaN
+    rotationPointY = NaN
+
+    invalidated = false
+
+    constructor(renderCalls)
+    {
+        this.renderCalls = renderCalls
+    }
+
+    setPosition(x, y)
+    {
+        this.posX = x
+        this.posY = y
+        return this
+    }
+
+    setSize(width, height)
+    {
+        this.width = width
+        this.height = height
+        return this
+    }
+
+    setColor(red, green, blue, optional_alpha)
+    {
+        this.colorRed = red
+        this.colorGreen = green
+        this.colorBlue = blue
+        if(typeof optional_alpha !== "undefined")
+            this.colorAlpha = optional_alpha
+        return this
+    }
+
+    setAlpha(alpha)
+    {
+        this.colorAlpha = alpha
+        return this
+    }
+
+    rotateDegrees(degreesAngle, optional_rotationCenterX, optional_rotationCenterY)
+    {
+        return this.rotateRadians(degreesAngle * Math.PI / 180, optional_rotationCenterX, optional_rotationCenterY)
+    }
+
+    rotateRadians(radiansAngle, optional_rotationCenterX, optional_rotationCenterY)
+    {
+        this.angle += radiansAngle
+        this.rotationPointX = optional_rotationCenterX
+        this.rotationPointY = optional_rotationCenterY
+        return this
+    }
+
+    draw()
+    {
+        if(this.invalidated)
+            throw "RenderCall has been drawn already. Please use a new one."
+
+        if(isNaN(this.posX) || isNaN(this.posY))
+            throw "RectangleRenderCall has no position set. Set it's position using 'RectangleRenderCall#setPosition'."
+
+        if(isNaN(this.width) || isNaN(this.height))
+            throw "RectangleRenderCall has no size set. Set it's size using 'RectangleRenderCall#setSize'."
+
+        let renderContext = this.renderCalls.renderContext
+
+        renderContext.fillStyle = `rgba(${this.colorRed}, ${this.colorGreen}, ${this.colorBlue}, ${(this.colorAlpha / 255)})`
+
+        if(this.angle != 0)
+        {
+            if(isNaN(this.rotationPointX) || isNaN(this.rotationPointY))
+            {
+                this.rotationPointX = this.posX + this.width / 2
+                this.rotationPointY = this.posY + this.height / 2
+            }
+
+            renderContext.translate(this.rotationPointX, this.rotationPointY)
+            renderContext.rotate(this.angle)
+            renderContext.translate(-this.rotationPointX, -this.rotationPointY)
+        }
+
+        renderContext.fillRect(this.posX, this.posY, this.width, this.height)
+
+        renderContext.resetTransform()
+
+        this.invalidated = true
+    }
+
+}
+
+class OvalRenderCall
+{
+
+    renderCalls = undefined
+
+    posX = NaN
+    posY = NaN
+    width = NaN
+    height = NaN
+
+    colorRed = 0
+    colorGreen = 0
+    colorBlue = 0
+    colorAlpha = 255
+
+    invalidated = false
+
+    constructor(renderCalls)
+    {
+        this.renderCalls = renderCalls
+    }
+
+    setPosition(x, y)
+    {
+        this.posX = x
+        this.posY = y
+        return this
+    }
+
+    setSize(width, height)
+    {
+        this.width = width
+        this.height = height
+        return this
+    }
+
+    setColor(red, green, blue, optional_alpha)
+    {
+        this.colorRed = red
+        this.colorGreen = green
+        this.colorBlue = blue
+        if(typeof optional_alpha !== "undefined")
+            this.colorAlpha = optional_alpha
+        return this
+    }
+
+    setAlpha(alpha)
+    {
+        this.colorAlpha = alpha
+        return this
+    }
+
+    draw()
+    {
+        if(this.invalidated)
+            throw "RenderCall has been drawn already. Please use a new one."
+
+        if(isNaN(this.posX) || isNaN(this.posY))
+            throw "OvalRenderCall has no position set. Set it's position using 'OvalRenderCall#setPosition'."
+
+        if(isNaN(this.width) || isNaN(this.height))
+            throw "OvalRenderCall has no size set. Set it's size using 'OvalRenderCall#setSize'."
+
+        let renderContext = this.renderCalls.renderContext
+
+        renderContext.fillStyle = `rgba(${this.colorRed}, ${this.colorGreen}, ${this.colorBlue}, ${(this.colorAlpha / 255)})`
+        renderContext.beginPath();
+        renderContext.ellipse(this.posX + this.width / 2, this.posY + this.height / 2, this.width / 2, this.height / 2, 0, 2 * Math.PI, false);
+        renderContext.fill();
+
+        this.invalidated = true
+    }
+
+}
+
+class SpriteRenderCall
+{
+
+    renderCalls = undefined
+
+    sprite = undefined
+
+    posX = NaN
+    posY = NaN
+    width = NaN
+    height = NaN
+
+    srcCutoutX = NaN
+    srcCutoutY = NaN
+    srcCutoutWidth = NaN
+    srcCutoutHeight = NaN
+
+    colorAlpha = 255
+
+    angle = 0
+    rotationPointX = NaN
+    rotationPointY = NaN
+
+    invalidated = false
+
+    constructor(renderCalls)
+    {
+        this.renderCalls = renderCalls
+    }
+
+    setSprite(sprite)
+    {
+        this.sprite = sprite
+        return this
+    }
+
+    setPosition(x, y)
+    {
+        this.posX = x
+        this.posY = y
+        return this
+    }
+
+    setSize(width, height)
+    {
+        this.width = width
+        this.height = height
+        return this
+    }
+
+    setSpriteCutoutDimensions(x, y, width, height)
+    {
+        this.srcCutoutX = x
+        this.srcCutoutY = y
+        this.srcCutoutWidth = width
+        this.srcCutoutHeight = height
+        return this
+    }
+
+    setAlpha(alpha)
+    {
+        this.colorAlpha = alpha
+        return this
+    }
+
+    rotateDegrees(degreesAngle, optional_rotationCenterX, optional_rotationCenterY)
+    {
+        return this.rotateRadians(degreesAngle * Math.PI / 180, optional_rotationCenterX, optional_rotationCenterY)
+    }
+
+    rotateRadians(radiansAngle, optional_rotationCenterX, optional_rotationCenterY)
+    {
+        this.angle += radiansAngle
+        this.rotationPointX = optional_rotationCenterX
+        this.rotationPointY = optional_rotationCenterY
+        return this
+    }
+
+    draw()
+    {
+        if(this.invalidated)
+            throw "RenderCall has been drawn already. Please use a new one."
+
+        if(typeof this.sprite == "undefined")
+            throw "SpriteRenderCall has no sprite set. Set it's position using 'SpriteRenderCall#setSprite'."
+
+        if(isNaN(this.posX) || isNaN(this.posY))
+            throw "SpriteRenderCall has no position set. Set it's position using 'SpriteRenderCall#setPosition'."
+
+        if(isNaN(this.width) || isNaN(this.height))
+            throw "SpriteRenderCall has no size set. Set it's size using 'SpriteRenderCall#setSize'."
+
+        if(isNaN(this.srcCutoutX) || isNaN(this.srcCutoutY) || isNaN(this.srcCutoutWidth) || isNaN(this.srcCutoutHeight))
+        {
+            this.srcCutoutX = 0;
+            this.srcCutoutY = 0;
+            this.srcCutoutWidth = this.sprite.getWidth();
+            this.srcCutoutHeight = this.sprite.getHeight();
+        }
+
+        let renderContext = this.renderCalls.renderContext
+
+        renderContext.globalAlpha = this.colorAlpha / 255
+
+        if(this.angle != 0)
+        {
+            if(isNaN(this.rotationPointX) || isNaN(this.rotationPointY))
+            {
+                this.rotationPointX = this.posX + this.width / 2
+                this.rotationPointY = this.posY + this.height / 2
+            }
+
+            renderContext.translate(this.rotationPointX, this.rotationPointY)
+            renderContext.rotate(this.angle)
+            renderContext.translate(-this.rotationPointX, -this.rotationPointY)
+        }
+
+        renderContext.drawImage(this.sprite.getImage(), this.srcCutoutX, this.srcCutoutY, this.srcCutoutWidth, this.srcCutoutHeight, this.posX, this.posY, this.width, this.height)
+
+        renderContext.resetTransform()
+
+        this.invalidated = true
+    }
+
+}
+
+class VirtualCanvasRenderCall
+{
+
+    renderCalls = undefined
+
+    virtualCanvas = undefined
+
+    posX = NaN
+    posY = NaN
+    width = NaN
+    height = NaN
+
+    srcCutoutX = NaN
+    srcCutoutY = NaN
+    srcCutoutWidth = NaN
+    srcCutoutHeight = NaN
+
+    colorAlpha = 255
+
+    angle = 0
+    rotationPointX = NaN
+    rotationPointY = NaN
+
+    invalidated = false
+
+    constructor(renderCalls)
+    {
+        this.renderCalls = renderCalls
+    }
+
+    setVirtualCanvas(virtualCanvas)
+    {
+        this.virtualCanvas = virtualCanvas
+        return this
+    }
+
+    setPosition(x, y)
+    {
+        this.posX = x
+        this.posY = y
+        return this
+    }
+
+    setSize(width, height)
+    {
+        this.width = width
+        this.height = height
+        return this
+    }
+
+    setCanvasCutoutDimensions(x, y, width, height)
+    {
+        this.srcCutoutX = x
+        this.srcCutoutY = y
+        this.srcCutoutWidth = width
+        this.srcCutoutHeight = height
+        return this
+    }
+
+    setAlpha(alpha)
+    {
+        this.colorAlpha = alpha
+        return this
+    }
+
+    rotateDegrees(degreesAngle, optional_rotationCenterX, optional_rotationCenterY)
+    {
+        return this.rotateRadians(degreesAngle * Math.PI / 180, optional_rotationCenterX, optional_rotationCenterY)
+    }
+
+    rotateRadians(radiansAngle, optional_rotationCenterX, optional_rotationCenterY)
+    {
+        this.angle += radiansAngle
+        this.rotationPointX = optional_rotationCenterX
+        this.rotationPointY = optional_rotationCenterY
+        return this
+    }
+
+    draw()
+    {
+        if(this.invalidated)
+            throw "RenderCall has been drawn already. Please use a new one."
+
+        if(typeof this.virtualCanvas == "undefined")
+            throw "VirtualCanvasRenderCall has no virtualcanvas set. Set it's position using 'VirtualCanvasRenderCall#setVirtualCanvas'."
+
+        if(isNaN(this.posX) || isNaN(this.posY))
+            throw "VirtualCanvasRenderCall has no position set. Set it's position using 'VirtualCanvasRenderCall#setPosition'."
+
+        if(isNaN(this.width) || isNaN(this.height))
+            throw "VirtualCanvasRenderCall has no size set. Set it's size using 'VirtualCanvasRenderCall#setSize'."
+
+        if(isNaN(this.srcCutoutX) || isNaN(this.srcCutoutY) || isNaN(this.srcCutoutWidth) || isNaN(this.srcCutoutHeight))
+        {
+            this.srcCutoutX = 0;
+            this.srcCutoutY = 0;
+            this.srcCutoutWidth = this.virtualCanvas.getWidth();
+            this.srcCutoutHeight = this.virtualCanvas.getHeight();
+        }
+
+        let renderContext = this.renderCalls.renderContext
+
+        renderContext.globalAlpha = this.colorAlpha / 255
+
+        if(this.angle != 0)
+        {
+            if(isNaN(this.rotationPointX) || isNaN(this.rotationPointY))
+            {
+                this.rotationPointX = this.posX + this.width / 2
+                this.rotationPointY = this.posY + this.height / 2
+            }
+
+            renderContext.translate(this.rotationPointX, this.rotationPointY)
+            renderContext.rotate(this.angle)
+            renderContext.translate(-this.rotationPointX, -this.rotationPointY)
+        }
+
+        renderContext.drawImage(this.virtualCanvas.getImage(), this.srcCutoutX, this.srcCutoutY, this.srcCutoutWidth, this.srcCutoutHeight, this.posX, this.posY, this.width, this.height)
+
+        renderContext.resetTransform()
+
+        this.invalidated = true
+    }
+
+}
+
+class TextRenderCall
+{
+
+    renderCalls = undefined
+
+    content = undefined
+
+    posX = NaN
+    posY = NaN
+    size = NaN
+
+    positioning = TextPositioning.RIGHT
+
+    family = "Consolas"
+
+    colorRed = 0
+    colorGreen = 0
+    colorBlue = 0
+    colorAlpha = 255
+
+    invalidated = false
+
+    constructor(renderCalls)
+    {
+        this.renderCalls = renderCalls
+    }
+
+    setContent(content)
+    {
+        this.content = content
+        return this
+    }
+
+    setPosition(x, y)
+    {
+        this.posX = x
+        this.posY = y
+        return this
+    }
+
+    setSize(size)
+    {
+        this.size = size
+        return this
+    }
+
+    setPositioning(textPositioning)
+    {
+        this.positioning = textPositioning
+        return this
+    }
+
+    setFontFamily(fontFamily)
+    {
+        this.family = fontFamily
+        return this
+    }
+
+    setColor(red, green, blue, optional_alpha)
+    {
+        this.colorRed = red
+        this.colorGreen = green
+        this.colorBlue = blue
+        if(typeof optional_alpha !== "undefined")
+            this.colorAlpha = optional_alpha
+        return this
+    }
+
+    setAlpha(alpha)
+    {
+        this.colorAlpha = alpha
+        return this
+    }
+
+    draw()
+    {
+        if(this.invalidated)
+            throw "RenderCall has been drawn already. Please use a new one."
+
+        if(typeof this.content == "undefined")
+            throw "TextRenderCall has no content set. Set it's position using 'TextRenderCall#setContent'."
+
+        if(isNaN(this.posX) || isNaN(this.posY))
+            throw "TextRenderCall has no position set. Set it's position using 'TextRenderCall#setPosition'."
+
+        if(isNaN(this.size))
+            throw "TextRenderCall has no size set. Set it's size using 'TextRenderCall#setSize'."
+
+        let renderContext = this.renderCalls.renderContext
+
+        renderContext.font = `${this.size}px ${this.family}`
+        renderContext.fillStyle = `rgba(${this.colorRed}, ${this.colorGreen}, ${this.colorBlue}, ${this.colorAlpha / 255})`
+        renderContext.textAlign = this.positioning
+        renderContext.fillText(this.content, this.posX, this.posY + this.size)
+
+        this.invalidated = true
+    }
+
+}
+
+class LineRenderCall
+{
+
+    renderCalls = undefined
+
+    posX = NaN
+    posY = NaN
+    endX = NaN
+    endY = NaN
+
+    lineWidth = NaN
+
+    colorRed = 0
+    colorGreen = 0
+    colorBlue = 0
+    colorAlpha = 255
+
+    invalidated = false
+
+    constructor(renderCalls)
+    {
+        this.renderCalls = renderCalls
+    }
+
+    setStartPosition(x, y)
+    {
+        this.posX = x
+        this.posY = y
+        return this
+    }
+
+    setEndPosition(x, y)
+    {
+        this.endX = x
+        this.endY = y
+        return this
+    }
+
+    setWidth(width)
+    {
+        this.lineWidth = width
+        return this
+    }
+
+    setColor(red, green, blue, optional_alpha)
+    {
+        this.colorRed = red
+        this.colorGreen = green
+        this.colorBlue = blue
+        if(typeof optional_alpha !== "undefined")
+            this.colorAlpha = optional_alpha
+        return this
+    }
+
+    setAlpha(alpha)
+    {
+        this.colorAlpha = alpha
+        return this
+    }
+
+    draw()
+    {
+        if(this.invalidated)
+            throw "RenderCall has been drawn already. Please use a new one."
+
+        if(isNaN(this.posX) || isNaN(this.posY))
+            throw "LineRenderCall has no start position set. Set it's start position using 'LineRenderCall#setStartPosition'."
+
+        if(isNaN(this.endX) || isNaN(this.endX))
+            throw "LineRenderCall has no end position set. Set it's end position using 'LineRenderCall#setEndPosition'."
+
+        if(isNaN(this.lineWidth))
+            throw "LineRenderCall has no width set. Set it's width using 'LineRenderCall#setWidth'."
+
+        let renderContext = this.renderCalls.renderContext
+
+        renderContext.strokeStyle = `rgba(${this.colorRed}, ${this.colorGreen}, ${this.colorBlue}, ${(this.colorAlpha / 255)})`
+        renderContext.lineWidth = this.lineWidth
+        renderContext.beginPath()
+        renderContext.moveTo(this.posX, this.posY)
+        renderContext.lineTo(this.endX, this.endY)
+        renderContext.stroke()
+
+        this.invalidated = true
+    }
+
+}
+
+class ClearRectangleRenderCall
+{
+
+    renderCalls = undefined
+
+    posX = NaN
+    posY = NaN
+    width = NaN
+    height = NaN
+
+    angle = 0
+    rotationPointX = NaN
+    rotationPointY = NaN
+
+    invalidated = false
+
+    constructor(renderCalls)
+    {
+        this.renderCalls = renderCalls
+    }
+
+    setPosition(x, y)
+    {
+        this.posX = x
+        this.posY = y
+        return this
+    }
+
+    setSize(width, height)
+    {
+        this.width = width
+        this.height = height
+        return this
+    }
+
+    rotateDegrees(degreesAngle, optional_rotationCenterX, optional_rotationCenterY)
+    {
+        return this.rotateRadians(degreesAngle * Math.PI / 180, optional_rotationCenterX, optional_rotationCenterY)
+    }
+
+    rotateRadians(radiansAngle, optional_rotationCenterX, optional_rotationCenterY)
+    {
+        this.angle += radiansAngle
+        this.rotationPointX = optional_rotationCenterX
+        this.rotationPointY = optional_rotationCenterY
+        return this
+    }
+
+    draw()
+    {
+        if(this.invalidated)
+            throw "RenderCall has been drawn already. Please use a new one."
+
+        if(isNaN(this.posX) || isNaN(this.posY))
+            throw "RectangleRenderCall has no position set. Set it's position using 'RectangleRenderCall#setPosition'."
+
+        if(isNaN(this.width) || isNaN(this.height))
+            throw "RectangleRenderCall has no size set. Set it's size using 'RectangleRenderCall#setSize'."
+
+        let renderContext = this.renderCalls.renderContext
+        let previousGlobalCompositeOperation = renderContext.globalCompositeOperation
+
+        renderContext.fillStyle = "rgba(0, 0, 0, 1)"
+        renderContext.globalCompositeOperation = "destination-out"
+
+        if(this.angle != 0)
+        {
+            if(isNaN(this.rotationPointX) || isNaN(this.rotationPointY))
+            {
+                this.rotationPointX = this.posX + this.width / 2
+                this.rotationPointY = this.posY + this.height / 2
+            }
+
+            renderContext.translate(this.rotationPointX, this.rotationPointY)
+            renderContext.rotate(this.angle)
+            renderContext.translate(-this.rotationPointX, -this.rotationPointY)
+        }
+
+        renderContext.fillRect(this.posX, this.posY, this.width, this.height)
+
+        renderContext.resetTransform()
+        renderContext.globalCompositeOperation = previousGlobalCompositeOperation
+
+        this.invalidated = true
+    }
+
+}
+
+
+
+class RenderCalls
+{
+
+    renderContext = undefined
+    width = 0
+    height = 0
+
+    setRenderContext(renderContext)
+    {
+        this.renderContext = renderContext
+    }
+
+    setSize(width, height)
+    {
+        this.width = width
+        this.height = height
+    }
+
+
+    drawRectangle()
+    {
+        return new RectangleRenderCall(this)
+    }
+
+    drawOval()
+    {
+        return new OvalRenderCall(this)
+    }
+
+    drawSprite()
+    {
+        return new SpriteRenderCall(this)
+    }
+
+    drawVirtualCanvas()
+    {
+        return new VirtualCanvasRenderCall(this)
+    }
+
+    drawText()
+    {
+        return new TextRenderCall(this)
+    }
+
+    drawLine()
+    {
+        return new LineRenderCall(this)
+    }
+
+    clearRectangle()
+    {
+        return new ClearRectangleRenderCall(this)
+    }
+
+
+    fill(red, green, blue, optional_alpha)
+    {
+        this.drawRectangle().setPosition(-1, -1).setSize(this.width + 2, this.height + 2).setColor(red, green, blue, optional_alpha).draw();
+    }
 
 }
 
@@ -527,70 +1186,6 @@ class Sprite
     onload()
     {
         this.loaded = true
-    }
-
-}
-
-
-
-class Sound
-{
-
-    sound = undefined
-
-    constructor(filePath)
-    {
-        this.sound = new Audio(filePath)
-    }
-
-    loop(looping)
-    {
-        this.sound.loop = looping
-    }
-
-    play()
-    {
-        if(this.isPlaying())
-            this.stop()
-        this.sound.play()
-    }
-
-    stop()
-    {
-        this.sound.pause()
-        this.sound.currentTime = 0
-    }
-
-    isPlaying()
-    {
-        return !this.sound.paused
-    }
-
-    setVolume(volume)
-    {
-        this.sound.volume = volume
-    }
-
-}
-
-
-
-class BoxCollision
-{
-
-    static rectTouchingRect(rect1PosX, rect1PosY, rect1SizeX, rect1SizeY, rect2PosX, rect2PosY, rect2SizeX, rect2SizeY)
-    {
-        return (!(rect1PosX + rect1SizeX < rect2PosX) && !(rect2PosX + rect2SizeX < rect1PosX) && !(rect1PosY + rect1SizeY < rect2PosY) && !(rect2PosY + rect2SizeY < rect1PosY))
-    }
-
-    static pointInsideRect(pointX, pointY, rectPosX, rectPosY, rectSizeX, rectSizeY)
-    {
-        return (rectPosX < pointX && pointX < rectPosX + rectSizeX && rectPosY < pointY && pointY < rectPosY + rectSizeY)
-    }
-
-    static rectInsideRect(rect1PosX, rect1PosY, rect1SizeX, rect1SizeY, rect2PosX, rect2PosY, rect2SizeX, rect2SizeY)
-    {
-        return (rect2PosX < rect1PosX && rect1PosX + rect1SizeX < rect2PosX + rect2SizeX && rect2PosY < rect1PosY && rect1PosY + rect1SizeY < rect2PosY + rect2SizeY)
     }
 
 }
@@ -639,7 +1234,11 @@ class VirtualCanvas extends RenderCalls
 
 }
 
-
+/*
+ *  WEIN2DAPPLICATION
+ *
+ *  The main class. Communicates with the canvas. and does rendering to it.
+ */
 
 class Wein2DApplication extends RenderCalls
 {
@@ -744,6 +1343,75 @@ class Wein2DApplication extends RenderCalls
     getMouseR()
     {
         return this.inputManager.getMouseR()
+    }
+
+}
+
+/*
+ *  OTHER CLASSES
+ *
+ *  Sound can be used to load a Sound file into memory and play it.
+ *  BoxCollision can be used to calculate basic AABB-Collision.
+ */
+
+class Sound
+{
+
+    sound = undefined
+
+    constructor(filePath)
+    {
+        this.sound = new Audio(filePath)
+    }
+
+    loop(looping)
+    {
+        this.sound.loop = looping
+    }
+
+    play()
+    {
+        if(this.isPlaying())
+        this.stop()
+        this.sound.play()
+    }
+
+    stop()
+    {
+        this.sound.pause()
+        this.sound.currentTime = 0
+    }
+
+    isPlaying()
+    {
+        return !this.sound.paused
+    }
+
+    setVolume(volume)
+    {
+        this.sound.volume = volume
+    }
+
+}
+
+
+
+class BoxCollision
+{
+
+    static rectTouchingRect(rect1PosX, rect1PosY, rect1SizeX, rect1SizeY, rect2PosX, rect2PosY, rect2SizeX, rect2SizeY)
+    {
+        return (!(rect1PosX + rect1SizeX < rect2PosX) && !(rect2PosX + rect2SizeX < rect1PosX) && !(rect1PosY + rect1SizeY < rect2PosY) && !(rect2PosY + rect2SizeY < rect1PosY))
+    }
+
+    static pointInsideRect(pointX, pointY, rectPosX, rectPosY, rectSizeX, rectSizeY)
+    {
+        return (rectPosX < pointX && pointX < rectPosX + rectSizeX && rectPosY < pointY && pointY < rectPosY + rectSizeY)
+    }
+
+    static rectInsideRect(rect1PosX, rect1PosY, rect1SizeX, rect1SizeY, rect2PosX, rect2PosY, rect2SizeX, rect2SizeY)
+    {
+        return (rect2PosX < rect1PosX && rect1PosX + rect1SizeX < rect2PosX + rect2SizeX && rect2PosY < rect1PosY && rect1PosY + rect1SizeY < rect2PosY + rect2SizeY)
     }
 
 }
