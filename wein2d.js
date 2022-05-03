@@ -936,14 +936,14 @@ class LineRenderCall
         this.renderCalls = renderCalls
     }
 
-    setStartPosition(x, y)
+    setStart(x, y)
     {
         this.posX = x
         this.posY = y
         return this
     }
 
-    setEndPosition(x, y)
+    setEnd(x, y)
     {
         this.endX = x
         this.endY = y
@@ -978,10 +978,10 @@ class LineRenderCall
             throw "RenderCall has been drawn already. Please use a new one."
 
         if(isNaN(this.posX) || isNaN(this.posY))
-            throw "LineRenderCall has no start position set. Set it's start position using 'LineRenderCall#setStartPosition'."
+            throw "LineRenderCall has no start position set. Set it's start position using 'LineRenderCall#setStart'."
 
         if(isNaN(this.endX) || isNaN(this.endX))
-            throw "LineRenderCall has no end position set. Set it's end position using 'LineRenderCall#setEndPosition'."
+            throw "LineRenderCall has no end position set. Set it's end position using 'LineRenderCall#setEnd'."
 
         if(isNaN(this.lineWidth))
             throw "LineRenderCall has no width set. Set it's width using 'LineRenderCall#setWidth'."
