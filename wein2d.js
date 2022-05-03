@@ -803,7 +803,7 @@ class VirtualCanvasRenderCall
             renderContext.translate(-this.rotationPointX, -this.rotationPointY)
         }
 
-        renderContext.drawImage(this.virtualCanvas.getImage(), this.srcCutoutX, this.srcCutoutY, this.srcCutoutWidth, this.srcCutoutHeight, this.posX, this.posY, this.width, this.height)
+        renderContext.drawImage(this.virtualCanvas.canvasElement, this.srcCutoutX, this.srcCutoutY, this.srcCutoutWidth, this.srcCutoutHeight, this.posX, this.posY, this.width, this.height)
 
         renderContext.resetTransform()
 
